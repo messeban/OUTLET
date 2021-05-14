@@ -38,12 +38,20 @@ while 1:
         for x in measurements:
             sumV = sumV + x[0]
             sumI = sumI + x[1]
-        print("Average")
-        print(sumV/30)
-        print(sumI/30)
+        averageV = sumV/30
+        averageI = sumI/30
+        averageW = averageI*averageV
+        state = ""
+        if averageW > 2:
+            state="IN USE"
+        else:
+            state="NOT IN USE"
+        print("Average:")
+        print(averageV)
+        print(averageI)
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        myobj = {'outletId': 1,'t': dt_string, 'V':sumV/30, 'I': sumI/30}
+        myobj = {'outletId': 1,'t': dt_string, 'V':sumV/30, 'I': sumI/30, state: state}
         x = requests.post(url, data =myobj)
         
         measurements = []
